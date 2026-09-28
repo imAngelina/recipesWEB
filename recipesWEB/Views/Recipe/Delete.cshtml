@@ -1,0 +1,46 @@
+﻿@model recipesWEB.ViewModels.Recipes.RecipeDeleteViewModel
+
+<h1>Изтриване на рецепта</h1>
+
+<h3>Сигурни ли сте, че искате да изтриете тази рецепта?</h3>
+
+<div>
+
+    <hr />
+
+    <dl>
+
+        <dt>
+            Name
+        </dt>
+
+        <dd>
+            @Model.Name
+        </dd>
+
+        <dt>
+            Category
+        </dt>
+
+        <dd>
+            @Model.CategoryName
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete" method="post">
+
+        <input asp-for="Id" type="hidden" />
+
+        <input type="submit"
+               value="Delete" />
+
+        |
+
+        <a asp-action="Index">
+            Back to List
+        </a>
+
+    </form>
+
+</div>

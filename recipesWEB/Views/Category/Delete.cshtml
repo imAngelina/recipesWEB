@@ -1,0 +1,46 @@
+﻿@model recipesWEB.ViewModels.Categories.CategoryDeleteViewModel
+
+<h1>Изтриване на категория</h1>
+
+<h3>Сигурни ли сте, че искате да изтриете тази категория?</h3>
+
+<div>
+
+    <hr />
+
+    <dl>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+    </dl>
+
+    <form asp-action="Delete" method="post">
+
+        <input asp-for="Id" type="hidden" />
+
+        <input type="submit"
+               value="Delete" />
+
+        |
+
+        <a asp-action="Index">
+            Back to List
+        </a>
+
+    </form>
+
+</div>

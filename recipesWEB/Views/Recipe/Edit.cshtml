@@ -1,0 +1,61 @@
+﻿@model recipesWEB.ViewModels.Recipes.RecipeEditViewModel
+
+<h1>Редактиране на рецепта</h1>
+
+<form asp-action="Edit" method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <label>Име на рецепта:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <br />
+    <br />
+
+    <label>Съставки:</label>
+    <textarea asp-for="Ingredients"></textarea>
+    <span asp-validation-for="Ingredients"></span>
+
+    <br />
+    <br />
+
+    <label>Начин на приготвяне:</label>
+    <textarea asp-for="Instructions"></textarea>
+    <span asp-validation-for="Instructions"></span>
+
+    <br />
+    <br />
+
+    <label>Време за приготвяне:</label>
+    <input asp-for="PreparationTime" />
+    <span asp-validation-for="PreparationTime"></span>
+
+    <br />
+    <br />
+
+    <label>Брой порции:</label>
+    <input asp-for="Servings" />
+    <span asp-validation-for="Servings"></span>
+
+    <br />
+    <br />
+
+    <label>Категория:</label>
+
+    <select asp-for="CategoryId"
+            asp-items="ViewBag.Categories">
+    </select>
+
+    <span asp-validation-for="CategoryId"></span>
+
+    <br />
+    <br />
+
+    <button type="submit">Запази промените</button>
+
+</form>
+
+<br />
+
+<a asp-action="Index">Назад към списъка</a>

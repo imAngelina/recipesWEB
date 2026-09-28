@@ -1,0 +1,85 @@
+﻿@model IEnumerable<recipesWEB.ViewModels.Recipes.RecipeIndexViewModel>
+
+@{
+    ViewData["Title"] = "Recipes";
+}
+
+<h1>Recipes</h1>
+
+<p>
+    <a asp-action="Create">Create New Recipe</a> |
+    <a asp-controller="Category"
+       asp-action="Index">
+        View Categories
+    </a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Ingredients
+            </th>
+            <th>
+                Preparation Time
+            </th>
+            <th>
+                Servings
+            </th>
+            <th>
+                Category
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.Name
+                </td>
+
+                <td>
+                    @item.Ingredients
+                </td>
+
+                <td>
+                    @item.PreparationTime min.
+                </td>
+
+                <td>
+                    @item.Servings
+                </td>
+
+                <td>
+                    @item.CategoryName
+                </td>
+
+                <td>
+                    <a asp-controller="Recipe"
+                       asp-action="Edit"
+                       asp-route-id="@item.Id">
+                        Edit
+                    </a> |
+
+                    <a asp-controller="Recipe"
+                       asp-action="Details"
+                       asp-route-id="@item.Id">
+                        Details
+                    </a> |
+
+                    <a asp-controller="Recipe"
+                       asp-action="Delete"
+                       asp-route-id="@item.Id">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

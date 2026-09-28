@@ -1,0 +1,69 @@
+﻿@model recipesWEB.ViewModels.Recipes.RecipeDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Recipe</h4>
+    <hr />
+
+    <dl class="row">
+
+        <dt>
+            Name
+        </dt>
+        <dd>
+            @Model.Name
+        </dd>
+
+        <dt>
+            Ingredients
+        </dt>
+        <dd>
+            @Model.Ingredients
+        </dd>
+
+        <dt>
+            Instructions
+        </dt>
+        <dd>
+            @Model.Instructions
+        </dd>
+
+        <dt>
+            Preparation Time
+        </dt>
+        <dd>
+            @Model.PreparationTime minutes
+        </dd>
+
+        <dt>
+            Servings
+        </dt>
+        <dd>
+            @Model.Servings
+        </dd>
+
+        <dt>
+            Category
+        </dt>
+        <dd>
+            @Model.CategoryName
+        </dd>
+
+    </dl>
+</div>
+
+<div>
+    <a asp-action="Edit"
+       asp-route-id="@Model.Id">
+        Edit
+    </a>
+    |
+    <a asp-action="Index">
+        Back to List
+    </a>
+</div>

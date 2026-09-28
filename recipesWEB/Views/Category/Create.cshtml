@@ -1,0 +1,30 @@
+﻿@model recipesWEB.ViewModels.Categories.CategoryCreateViewModel
+
+<h1>Добавяне на категория</h1>
+
+<form asp-action="Create" method="post">
+
+    <label>Име на категория:</label>
+    <input asp-for="Name" />
+    <span asp-validation-for="Name"></span>
+
+    <br />
+    <br />
+
+    <label>Описание:</label>
+    <input asp-for="Description" />
+    <span asp-validation-for="Description"></span>
+
+    <br />
+    <br />
+
+    <button type="submit">Запази</button>
+
+</form>
+
+<a asp-action="Index">Назад към списъка</a>
+
+<br />
+<br />
+
+<a href="/Category/Index">Покажи всички категории</a>
