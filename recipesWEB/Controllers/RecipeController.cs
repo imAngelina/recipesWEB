@@ -30,7 +30,7 @@ namespace recipesWEB.Controllers
                     {
                         Id = recipe.Id,
                         Name = recipe.Name,
-                        Ingredients = recipe.Ingredients,
+                       
                         PreparationTime = recipe.PreparationTime,
                         Servings = recipe.Servings,
                         CategoryId = recipe.CategoryId,
@@ -56,8 +56,6 @@ namespace recipesWEB.Controllers
                 {
                     Id = recipe.Id,
                     Name = recipe.Name,
-                    Ingredients = recipe.Ingredients,
-                    Instructions = recipe.Instructions,
                     PreparationTime = recipe.PreparationTime,
                     Servings = recipe.Servings,
                     CategoryId = recipe.CategoryId,
@@ -88,8 +86,6 @@ namespace recipesWEB.Controllers
                     var recipe = new Recipe
                     {
                         Name = model.Name,
-                        Ingredients = model.Ingredients,
-                        Instructions = model.Instructions,
                         PreparationTime = model.PreparationTime,
                         Servings = model.Servings,
                         CategoryId = model.CategoryId
@@ -126,8 +122,6 @@ namespace recipesWEB.Controllers
                 {
                     Id = recipe.Id,
                     Name = recipe.Name,
-                    Ingredients = recipe.Ingredients,
-                    Instructions = recipe.Instructions,
                     PreparationTime = recipe.PreparationTime,
                     Servings = recipe.Servings,
                     CategoryId = recipe.CategoryId
@@ -165,8 +159,6 @@ namespace recipesWEB.Controllers
                     }
 
                     recipe.Name = model.Name;
-                    recipe.Ingredients = model.Ingredients;
-                    recipe.Instructions = model.Instructions;
                     recipe.PreparationTime = model.PreparationTime;
                     recipe.Servings = model.Servings;
                     recipe.CategoryId = model.CategoryId;

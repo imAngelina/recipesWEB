@@ -1,0 +1,56 @@
+﻿@model recipesWEB.ViewModels.RecipeIngredients.RecipeIngredientCreateViewModel
+
+@{
+    ViewData["Title"] = "Добавяне на продукт към рецепта";
+}
+
+<h1>Добавяне на продукт към рецепта</h1>
+
+<form asp-action="Create" method="post">
+    @Html.AntiForgeryToken()
+
+    <div asp-validation-summary="ModelOnly"
+         class="text-danger"></div>
+
+    <div class="mb-3">
+        <label asp-for="RecipeId" class="form-label">Рецепта</label>
+        <select asp-for="RecipeId"
+                asp-items="ViewBag.Recipes"
+                class="form-select">
+            <option value="0">-- Изберете рецепта --</option>
+        </select>
+        <span asp-validation-for="RecipeId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="IngredientId" class="form-label">Продукт</label>
+        <select asp-for="IngredientId"
+                asp-items="ViewBag.Ingredients"
+                class="form-select">
+            <option value="0">-- Изберете продукт --</option>
+        </select>
+        <span asp-validation-for="IngredientId" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label">Количество</label>
+        <input asp-for="Quantity" class="form-control"
+               type="number" min="0.01" step="0.01" />
+        <span asp-validation-for="Quantity" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Unit" class="form-label">Мерна единица</label>
+        <input asp-for="Unit" class="form-control"
+               placeholder="Например: g, ml, бр." />
+        <span asp-validation-for="Unit" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Добави</button>
+
+    <a asp-action="Index" class="btn btn-secondary">Назад</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

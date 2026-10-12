@@ -6,7 +6,6 @@
 
         public string Name { get; set; }
 
-        public string Ingredients { get; set; }
 
         public int PreparationTime { get; set; }
 

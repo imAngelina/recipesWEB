@@ -1,0 +1,43 @@
+﻿@model recipesWEB.ViewModels.Ingredients.IngredientDeleteViewModel
+
+@{
+    ViewData["Title"] = "Изтриване на продукт";
+}
+
+<h1>Изтриване на продукт</h1>
+
+<h4>Сигурни ли сте, че искате да изтриете този продукт?</h4>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Име</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Описание</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+
+    <dt class="col-sm-3">Брой рецепти</dt>
+    <dd class="col-sm-9">@Model.RecipesCount</dd>
+</dl>
+
+@if (Model.RecipesCount > 0)
+{
+    <div class="alert alert-warning">
+        Продуктът участва в рецепти. Първо премахнете връзките му с тях.
+    </div>
+
+    <a asp-action="Index" class="btn btn-secondary">Назад</a>
+}
+else
+{
+    <form asp-action="Delete" asp-route-id="@Model.Id" method="post">
+        @Html.AntiForgeryToken()
+
+        <button type="submit" class="btn btn-danger">
+            Изтрий
+        </button>
+
+        <a asp-action="Index" class="btn btn-secondary">Отказ</a>
+    </form>
+}

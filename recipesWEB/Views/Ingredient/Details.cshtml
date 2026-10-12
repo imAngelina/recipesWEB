@@ -1,0 +1,40 @@
+﻿@model recipesWEB.ViewModels.Ingredients.IngredientDetailsViewModel
+
+@{
+    ViewData["Title"] = "Детайли за продукт";
+}
+
+<h1>Детайли за продукт</h1>
+
+<hr />
+
+<dl class="row">
+    <dt class="col-sm-3">Име</dt>
+    <dd class="col-sm-9">@Model.Name</dd>
+
+    <dt class="col-sm-3">Описание</dt>
+    <dd class="col-sm-9">@Model.Description</dd>
+</dl>
+
+<h4>Рецепти, в които участва продуктът</h4>
+
+@if (Model.Recipes.Any())
+{
+    <ul>
+        @foreach (var recipe in Model.Recipes)
+        {
+            <li>@recipe</li>
+        }
+    </ul>
+}
+else
+{
+    <p>Този продукт все още не участва в рецепти.</p>
+}
+
+<a asp-action="Edit" asp-route-id="@Model.Id"
+   class="btn btn-warning">Редактирай</a>
+
+<a asp-action="Index" class="btn btn-secondary">
+    Назад към списъка
+</a>

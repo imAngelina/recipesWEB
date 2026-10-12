@@ -16,14 +16,6 @@ namespace recipesDATA.Entities
         [StringLength(100)]
         public string Name { get; set; }
 
-        [Required]
-        [StringLength(1000)]
-        public string Ingredients { get; set; }
-
-        [Required]
-        [StringLength(2000)]
-        public string Instructions { get; set; }
-
         [Range(1, 600)]
         public int PreparationTime { get; set; }
 
@@ -33,5 +25,7 @@ namespace recipesDATA.Entities
         public int CategoryId { get; set; }
 
         public Category Category { get; set; }
+        public ICollection<RecipeIngredient> RecipeIngredients { get; set; }
+    = new List<RecipeIngredient>();
     }
 }
