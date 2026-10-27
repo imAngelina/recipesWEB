@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37411.7 d17.14
+VisualStudioVersion = 17.14.37411.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "recipesWEB", "recipesWEB\recipesWEB.csproj", "{0CB8D22B-464D-49F2-B18C-7764C486985A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "recipesWEB", "recipesWEB\recipesWEB.csproj", "{0CB8D22B-464D-49F2-B18C-7764C486985A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "recipesDATA", "recipesDATA\recipesDATA.csproj", "{64AFB3E0-6661-4661-9254-81E34F8DE8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "recipesDATA", "recipesDATA\recipesDATA.csproj", "{64AFB3E0-6661-4661-9254-81E34F8DE8EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "recipeService", "recipeService\recipeService.csproj", "{FC3E1ADF-C7C8-466A-BEAB-FCD77F9C662C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{64AFB3E0-6661-4661-9254-81E34F8DE8EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64AFB3E0-6661-4661-9254-81E34F8DE8EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64AFB3E0-6661-4661-9254-81E34F8DE8EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3E1ADF-C7C8-466A-BEAB-FCD77F9C662C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3E1ADF-C7C8-466A-BEAB-FCD77F9C662C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3E1ADF-C7C8-466A-BEAB-FCD77F9C662C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3E1ADF-C7C8-466A-BEAB-FCD77F9C662C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,23 +2,23 @@
 using Microsoft.EntityFrameworkCore;
 using recipesDATA;
 using recipesDATA.Entities;
+using recipesService.Interfaces;
 using recipesWEB.ViewModels.Categories;
 
 namespace recipesWEB.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly RecipesDbContext context;
+        private readonly ICategoryService cs;
 
-        public CategoryController(RecipesDbContext context)
+        public CategoryController(ICategoryService cs)
         {
-            this.context = context;
+            this.cs = cs;
         }
 
         public async Task<IActionResult> Index()
         {
-            var categories = await context.Categories
-                .ToListAsync();
+            var categories = await cs.GetAllCategoriesAsync();
 
             var model = new List<CategoryIndexViewModel>();
 
@@ -37,9 +37,7 @@ namespace recipesWEB.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var category = await context.Categories
-                .Include(c => c.Recipes)
-                .FirstOrDefaultAsync(c => c.Id == id);
+            var category = await cs.GetCategoryDetailsAsync(id);
 
             if (category == null)
             {
@@ -59,15 +57,14 @@ namespace recipesWEB.Controllers
             return View(model);
         }
 
-   
         public IActionResult Create()
         {
             return View();
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> Create(CategoryCreateViewModel model)
+        public async Task<IActionResult> Create(
+            CategoryCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -77,8 +74,7 @@ namespace recipesWEB.Controllers
                     Description = model.Description
                 };
 
-                context.Categories.Add(category);
-                await context.SaveChangesAsync();
+                await cs.AddCategoryAsync(category);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -86,12 +82,9 @@ namespace recipesWEB.Controllers
             return View(model);
         }
 
-       
-
         public async Task<IActionResult> Edit(int id)
         {
-            var category = await context.Categories
-                .FindAsync(id);
+            var category = await cs.GetCategoryByIdAsync(id);
 
             if (category == null)
             {
@@ -108,7 +101,6 @@ namespace recipesWEB.Controllers
             return View(model);
         }
 
-        
         [HttpPost]
         public async Task<IActionResult> Edit(
             int id,
@@ -121,8 +113,7 @@ namespace recipesWEB.Controllers
 
             if (ModelState.IsValid)
             {
-                var category = await context.Categories
-                    .FindAsync(id);
+                var category = await cs.GetCategoryByIdAsync(id);
 
                 if (category == null)
                 {
@@ -132,7 +123,7 @@ namespace recipesWEB.Controllers
                 category.Name = model.Name;
                 category.Description = model.Description;
 
-                await context.SaveChangesAsync();
+                await cs.UpdateCategoryAsync(category);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -140,12 +131,9 @@ namespace recipesWEB.Controllers
             return View(model);
         }
 
-      
-
         public async Task<IActionResult> Delete(int id)
         {
-            var category = await context.Categories
-                .FindAsync(id);
+            var category = await cs.GetCategoryByIdAsync(id);
 
             if (category == null)
             {
@@ -162,18 +150,15 @@ namespace recipesWEB.Controllers
             return View(model);
         }
 
-
         [HttpPost]
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var category = await context.Categories
-                .FindAsync(id);
+            var category = await cs.GetCategoryByIdAsync(id);
 
             if (category != null)
             {
-                context.Categories.Remove(category);
-                await context.SaveChangesAsync();
+                await cs.DeleteCategoryAsync(id);
             }
 
             return RedirectToAction(nameof(Index));

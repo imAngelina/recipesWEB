@@ -3,24 +3,22 @@ using recipesDATA.Entities;
 using recipesDATA;
 using recipesWEB.ViewModels.Ingredients;
 using Microsoft.EntityFrameworkCore;
+using recipesService.Interfaces;
 
 namespace recipesWEB.Controllers
 {
     public class IngredientController : Controller
     {
-        private readonly RecipesDbContext context;
+        private readonly IIngredientService ins;
 
-        public IngredientController(RecipesDbContext context)
+        public IngredientController(IIngredientService ins)
         {
-            this.context = context;
+            this.ins = ins;
         }
 
         public async Task<IActionResult> Index()
         {
-            var ingredients = await context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                .OrderBy(i => i.Name)
-                .ToListAsync();
+            var ingredients = await ins.GetAllIngredientsAsync();
 
             var model = new List<IngredientIndexViewModel>();
 
@@ -40,10 +38,7 @@ namespace recipesWEB.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var ingredient = await context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                    .ThenInclude(ri => ri.Recipe)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var ingredient = await ins.GetIngredientDetailsAsync(id);
 
             if (ingredient == null)
             {
@@ -75,12 +70,18 @@ namespace recipesWEB.Controllers
         public async Task<IActionResult> Create(
             IngredientCreateViewModel model)
         {
-            if (await context.Ingredients
-                .AnyAsync(i => i.Name == model.Name.Trim()))
+            var ingredients = await ins.GetAllIngredientsAsync();
+
+            foreach (var ingredient in ingredients)
             {
-                ModelState.AddModelError(
-                    nameof(model.Name),
-                    "Вече съществува продукт с това име.");
+                if (ingredient.Name == model.Name.Trim())
+                {
+                    ModelState.AddModelError(
+                        nameof(model.Name),
+                        "Вече съществува продукт с това име.");
+
+                    break;
+                }
             }
 
             if (ModelState.IsValid)
@@ -91,9 +92,7 @@ namespace recipesWEB.Controllers
                     Description = model.Description?.Trim()
                 };
 
-                context.Ingredients.Add(ingredient);
-
-                await context.SaveChangesAsync();
+                await ins.AddIngredientAsync(ingredient);
 
                 return RedirectToAction(nameof(Index));
             }
@@ -103,8 +102,7 @@ namespace recipesWEB.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
-            var ingredient = await context.Ingredients
-                .FindAsync(id);
+            var ingredient = await ins.GetIngredientByIdAsync(id);
 
             if (ingredient == null)
             {
@@ -132,13 +130,19 @@ namespace recipesWEB.Controllers
                 return NotFound();
             }
 
-            if (await context.Ingredients.AnyAsync(i =>
-                i.Id != id &&
-                i.Name == model.Name.Trim()))
+            var ingredients = await ins.GetAllIngredientsAsync();
+
+            foreach (var ingredient in ingredients)
             {
-                ModelState.AddModelError(
-                    nameof(model.Name),
-                    "Вече съществува продукт с това име.");
+                if (ingredient.Id != id &&
+                    ingredient.Name == model.Name.Trim())
+                {
+                    ModelState.AddModelError(
+                        nameof(model.Name),
+                        "Вече съществува продукт с това име.");
+
+                    break;
+                }
             }
 
             if (!ModelState.IsValid)
@@ -146,27 +150,24 @@ namespace recipesWEB.Controllers
                 return View(model);
             }
 
-            var ingredient = await context.Ingredients
-                .FindAsync(id);
+            var currentIngredient = await ins.GetIngredientByIdAsync(id);
 
-            if (ingredient == null)
+            if (currentIngredient == null)
             {
                 return NotFound();
             }
 
-            ingredient.Name = model.Name.Trim();
-            ingredient.Description = model.Description?.Trim();
+            currentIngredient.Name = model.Name.Trim();
+            currentIngredient.Description = model.Description?.Trim();
 
-            await context.SaveChangesAsync();
+            await ins.UpdateIngredientAsync(currentIngredient);
 
             return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var ingredient = await context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var ingredient = await ins.GetIngredientDetailsAsync(id);
 
             if (ingredient == null)
             {
@@ -189,9 +190,7 @@ namespace recipesWEB.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var ingredient = await context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                .FirstOrDefaultAsync(i => i.Id == id);
+            var ingredient = await ins.GetIngredientDetailsAsync(id);
 
             if (ingredient == null)
             {
@@ -206,9 +205,7 @@ namespace recipesWEB.Controllers
                 return RedirectToAction(nameof(Delete), new { id });
             }
 
-            context.Ingredients.Remove(ingredient);
-
-            await context.SaveChangesAsync();
+            await ins.DeleteIngredientAsync(id);
 
             return RedirectToAction(nameof(Index));
         }
