@@ -2,10 +2,12 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace recipesDATA.Migrations
 {
     /// <inheritdoc />
-    public partial class updateRecipe : Migration
+    public partial class AddedShitFinal : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -84,6 +86,57 @@ namespace recipesDATA.Migrations
                         principalTable: "Recipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Main meals and dishes", "Main Dishes" },
+                    { 2, "Sweet dishes and desserts", "Desserts" },
+                    { 3, "Fresh and healthy salads", "Salads" },
+                    { 4, "Different types of soups", "Soups" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ingredients",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Fresh chicken meat", "Chicken" },
+                    { 2, "White rice", "Rice" },
+                    { 3, "Dark chocolate", "Chocolate" },
+                    { 4, "Fresh tomatoes", "Tomatoes" },
+                    { 5, "Fresh cucumber", "Cucumber" },
+                    { 6, "Fresh carrots", "Carrots" },
+                    { 7, "Fresh onion", "Onion" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Recipes",
+                columns: new[] { "Id", "CategoryId", "Name", "PreparationTime", "Servings" },
+                values: new object[,]
+                {
+                    { 1, 1, "Chicken with Rice", 45, 4 },
+                    { 2, 2, "Chocolate Cake", 60, 8 },
+                    { 3, 3, "Shopska Salad", 15, 2 },
+                    { 4, 4, "Chicken Soup", 50, 4 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RecipeIngredients",
+                columns: new[] { "IngredientId", "RecipeId", "Quantity", "Unit" },
+                values: new object[,]
+                {
+                    { 1, 1, 500m, "g" },
+                    { 2, 1, 300m, "g" },
+                    { 3, 2, 200m, "g" },
+                    { 4, 3, 2m, "pcs" },
+                    { 5, 3, 1m, "pcs" },
+                    { 1, 4, 300m, "g" },
+                    { 6, 4, 2m, "pcs" },
+                    { 7, 4, 1m, "pcs" }
                 });
 
             migrationBuilder.CreateIndex(

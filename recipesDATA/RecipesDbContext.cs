@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using recipesDATA.Configurations;
 using recipesDATA.Entities;
 using System;
 using System.Collections.Generic;
@@ -39,6 +40,11 @@ namespace recipesDATA
                 .WithMany(i => i.RecipeIngredients)
                 .HasForeignKey(ri => ri.IngredientId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.ApplyConfiguration(new CategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new RecipeConfiguration());
+            modelBuilder.ApplyConfiguration(new IngredientConfiguration());
+            modelBuilder.ApplyConfiguration(new RecipeIngredientConfiguration());
         }
     }
 }

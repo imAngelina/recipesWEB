@@ -42,6 +42,32 @@ namespace recipesDATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Main meals and dishes",
+                            Name = "Main Dishes"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Sweet dishes and desserts",
+                            Name = "Desserts"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Fresh and healthy salads",
+                            Name = "Salads"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Different types of soups",
+                            Name = "Soups"
+                        });
                 });
 
             modelBuilder.Entity("recipesDATA.Entities.Ingredient", b =>
@@ -64,6 +90,50 @@ namespace recipesDATA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Ingredients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Fresh chicken meat",
+                            Name = "Chicken"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "White rice",
+                            Name = "Rice"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Dark chocolate",
+                            Name = "Chocolate"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Fresh tomatoes",
+                            Name = "Tomatoes"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Fresh cucumber",
+                            Name = "Cucumber"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Fresh carrots",
+                            Name = "Carrots"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Fresh onion",
+                            Name = "Onion"
+                        });
                 });
 
             modelBuilder.Entity("recipesDATA.Entities.Recipe", b =>
@@ -93,6 +163,40 @@ namespace recipesDATA.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("Recipes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name = "Chicken with Rice",
+                            PreparationTime = 45,
+                            Servings = 4
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Name = "Chocolate Cake",
+                            PreparationTime = 60,
+                            Servings = 8
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Name = "Shopska Salad",
+                            PreparationTime = 15,
+                            Servings = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            Name = "Chicken Soup",
+                            PreparationTime = 50,
+                            Servings = 4
+                        });
                 });
 
             modelBuilder.Entity("recipesDATA.Entities.RecipeIngredient", b =>
@@ -116,6 +220,64 @@ namespace recipesDATA.Migrations
                     b.HasIndex("IngredientId");
 
                     b.ToTable("RecipeIngredients");
+
+                    b.HasData(
+                        new
+                        {
+                            RecipeId = 1,
+                            IngredientId = 1,
+                            Quantity = 500m,
+                            Unit = "g"
+                        },
+                        new
+                        {
+                            RecipeId = 1,
+                            IngredientId = 2,
+                            Quantity = 300m,
+                            Unit = "g"
+                        },
+                        new
+                        {
+                            RecipeId = 2,
+                            IngredientId = 3,
+                            Quantity = 200m,
+                            Unit = "g"
+                        },
+                        new
+                        {
+                            RecipeId = 3,
+                            IngredientId = 4,
+                            Quantity = 2m,
+                            Unit = "pcs"
+                        },
+                        new
+                        {
+                            RecipeId = 3,
+                            IngredientId = 5,
+                            Quantity = 1m,
+                            Unit = "pcs"
+                        },
+                        new
+                        {
+                            RecipeId = 4,
+                            IngredientId = 1,
+                            Quantity = 300m,
+                            Unit = "g"
+                        },
+                        new
+                        {
+                            RecipeId = 4,
+                            IngredientId = 6,
+                            Quantity = 2m,
+                            Unit = "pcs"
+                        },
+                        new
+                        {
+                            RecipeId = 4,
+                            IngredientId = 7,
+                            Quantity = 1m,
+                            Unit = "pcs"
+                        });
                 });
 
             modelBuilder.Entity("recipesDATA.Entities.Recipe", b =>
