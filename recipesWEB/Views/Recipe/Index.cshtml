@@ -13,6 +13,67 @@
         View Categories
     </a>
 </p>
+@* Forma za tursene, filtrirane i sortirane *@
+
+<form asp-controller="Recipe" asp-action="Index" method="get">
+
+    <div class="col-md-4">
+        <label class="form-label">Recipe name</label>
+
+        <input type="text"
+               name="searchString"
+               value="@ViewBag.SearchString"
+               class="form-control"
+               placeholder="Search by name..." />
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">Category</label>
+
+        <select name="categoryId" class="form-control">
+            <option value="">All categories</option>
+
+            @foreach (var category in ViewBag.Categories)
+            {
+                <option value="@category.Id"
+                        selected="@(ViewBag.CategoryId == category.Id)">
+                    @category.Name
+                </option>
+            }
+        </select>
+    </div>
+
+    <div class="col-md-4">
+        <label class="form-label">Sort by</label>
+
+        <select name="sortOrder" class="form-control">
+            <option value="name"
+                    selected="@(ViewBag.SortOrder == "name")">
+                Name ascending
+            </option>
+
+            <option value="name_desc"
+                    selected="@(ViewBag.SortOrder == "name_desc")">
+                Name descending
+            </option>
+        </select>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary">
+        Search
+    </button>
+
+    <a asp-controller="Recipe"
+       asp-action="Index"
+       class="btn btn-secondary">
+        Clear
+    </a>
+
+</form>
+
+<br />
 
 <table class="table">
     <thead>

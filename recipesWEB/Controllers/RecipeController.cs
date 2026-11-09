@@ -20,10 +20,24 @@ namespace recipesWEB.Controllers
             this.rs = rs;
             this.cs = cs;
         }
-
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        public async Task<IActionResult> Index(
+    string searchString,
+    int? categoryId,
+    string sortOrder)
         {
-            var recipes = await rs.GetAllRecipesAsync();
+           
+            // Запазваме стойностите за изгледа
+            ViewBag.SearchString = searchString;
+            ViewBag.CategoryId = categoryId;
+            ViewBag.SortOrder = sortOrder;
+            ViewBag.Categories = await cs.GetAllCategoriesAsync();
+
+            // Извличаме рецептите с търсене, филтриране и сортиране
+            var recipes = await rs.GetAllAsync(
+                searchString,
+                categoryId,
+                sortOrder);
 
             var model = new List<RecipeIndexViewModel>();
 

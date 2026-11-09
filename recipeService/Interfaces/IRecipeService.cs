@@ -15,5 +15,7 @@ namespace recipesService.Interfaces
         Task AddRecipeAsync(Recipe recipe);
         Task UpdateRecipeAsync(Recipe recipe);
         Task DeleteRecipeAsync(int id);
+
+        Task<IEnumerable<Recipe>> GetAllAsync( string searchString, int? categoryId, string sortOrder);
     }
 }

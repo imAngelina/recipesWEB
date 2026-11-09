@@ -69,5 +69,42 @@ namespace recipesService.Services
                 await new_context.SaveChangesAsync();
             }
         }
+
+
+
+        public async Task<IEnumerable<Recipe>> GetAllAsync( string searchString, int? categoryId, string sortOrder)
+        {
+            var recipes = new_context.Recipes
+                .Include(r => r.Category)
+                .AsQueryable();
+
+            // Търсене по име
+            if (!string.IsNullOrWhiteSpace(searchString))
+            {
+                recipes = recipes.Where(r =>
+                    r.Name.Contains(searchString));
+            }
+
+            // Филтриране по категория
+            if (categoryId.HasValue)
+            {
+                recipes = recipes.Where(r =>
+                    r.CategoryId == categoryId);
+            }
+
+            // Сортиране
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    recipes = recipes.OrderByDescending(r => r.Name);
+                    break;
+
+                default:
+                    recipes = recipes.OrderBy(r => r.Name);
+                    break;
+            }
+
+            return await recipes.ToListAsync();
+        }
     }
 }
