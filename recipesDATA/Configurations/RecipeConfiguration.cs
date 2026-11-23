@@ -13,6 +13,22 @@ namespace recipesDATA.Configurations
     {
         public void Configure(EntityTypeBuilder<Recipe> builder)
         {
+            builder.HasKey(r => r.Id);
+
+            builder.Property(r => r.Name)
+                .IsRequired()
+                .HasMaxLength(150);
+
+
+            builder.HasOne(r => r.Category)
+                .WithMany(c => c.Recipes)
+                .HasForeignKey(r => r.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(r => r.RecipeIngredients)
+                .WithOne(ri => ri.Recipe)
+                .HasForeignKey(ri => ri.RecipeId)
+                .OnDelete(DeleteBehavior.Cascade);
             builder.HasData(
                  new Recipe
                  {

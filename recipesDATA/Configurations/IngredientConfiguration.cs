@@ -13,6 +13,14 @@ namespace recipesDATA.Configurations
     {
         public void Configure(EntityTypeBuilder<Ingredient> builder)
         {
+            builder.HasKey(i => i.Id);
+
+            builder.Property(i => i.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(i => i.Description)
+                .HasMaxLength(500);
             builder.HasData(
                  new Ingredient
                  {

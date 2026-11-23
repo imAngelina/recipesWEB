@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using recipesDATA;
 using recipesDATA.Entities;
 using recipesService.Interfaces;
+using recipesService.Services;
 using recipesWEB.ViewModels.Categories;
 
 namespace recipesWEB.Controllers
@@ -156,11 +157,18 @@ namespace recipesWEB.Controllers
         {
             var category = await cs.GetCategoryByIdAsync(id);
 
-            if (category != null)
+            if (category == null)
             {
-                await cs.DeleteCategoryAsync(id);
+                return NotFound();
             }
 
+            if (category.Recipes != null && category.Recipes.Any())
+            {
+                TempData["ErrorMessage"] = "Категорията съдържа рецепти и не може да бъде изтрита. Първо премахнете или преместете рецептите от нея.";
+                return RedirectToAction(nameof(Index), new { id });
+            }
+
+            await cs.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }

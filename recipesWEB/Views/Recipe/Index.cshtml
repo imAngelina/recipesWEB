@@ -5,7 +5,12 @@
 }
 
 <h1>Recipes</h1>
-
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <p>
     <a asp-action="Create">Create New Recipe</a> |
     <a asp-controller="Category"

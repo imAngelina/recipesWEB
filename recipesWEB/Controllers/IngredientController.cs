@@ -214,10 +214,8 @@ namespace recipesWEB.Controllers
 
             if (ingredient.RecipeIngredients.Any())
             {
-                TempData["ErrorMessage"] =
-                    "Продуктът участва в рецепти. Премахни връзките му с тях, преди да го изтриеш.";
-
-                return RedirectToAction(nameof(Delete), new { id });
+                TempData["ErrorMessage"] = "Продуктът участва в рецепти. Премахни връзките му с тях, преди да го изтриеш.";
+                return RedirectToAction(nameof(Index), new { id });
             }
 
             await ins.DeleteIngredientAsync(id);

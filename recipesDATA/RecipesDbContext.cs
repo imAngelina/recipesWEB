@@ -26,20 +26,7 @@ namespace recipesDATA
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<RecipeIngredient>()
-                .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
-
-            modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(ri => ri.Recipe)
-                .WithMany(r => r.RecipeIngredients)
-                .HasForeignKey(ri => ri.RecipeId)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<RecipeIngredient>()
-                .HasOne(ri => ri.Ingredient)
-                .WithMany(i => i.RecipeIngredients)
-                .HasForeignKey(ri => ri.IngredientId)
-                .OnDelete(DeleteBehavior.Restrict);
+           
 
             modelBuilder.ApplyConfiguration(new CategoryConfiguration());
             modelBuilder.ApplyConfiguration(new RecipeConfiguration());

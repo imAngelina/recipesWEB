@@ -13,6 +13,19 @@ namespace recipesDATA.Configurations
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
+            builder.HasKey(c => c.Id);
+
+            builder.Property(c => c.Name)
+                .IsRequired()
+                .HasMaxLength(100);
+
+            builder.Property(c => c.Description)
+                .HasMaxLength(500);
+
+            builder.HasMany(c => c.Recipes)
+                .WithOne(r => r.Category)
+                .HasForeignKey(r => r.CategoryId)
+                .OnDelete(DeleteBehavior.Restrict);
             builder.HasData(
                new Category
                {

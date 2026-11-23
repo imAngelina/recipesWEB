@@ -77,16 +77,17 @@ namespace recipesService.Services
         public async Task DeleteIngredientAsync(int id)
         {
             var ingredient = await new_context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                .FirstOrDefaultAsync(i => i.Id == id);
+        .Include(i => i.RecipeIngredients)
+        .FirstOrDefaultAsync(i => i.Id == id);
 
             if (ingredient != null)
             {
-                new_context.RecipeIngredients.RemoveRange(
-                    ingredient.RecipeIngredients);
+                if (ingredient.RecipeIngredients.Any())
+                {
+                    new_context.RecipeIngredients.RemoveRange(ingredient.RecipeIngredients);
+                }
 
                 new_context.Ingredients.Remove(ingredient);
-
                 await new_context.SaveChangesAsync();
             }
         }

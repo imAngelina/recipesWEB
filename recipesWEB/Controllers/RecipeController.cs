@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using recipesDATA;
 using recipesDATA.Entities;
 using recipesService.Interfaces;
+using recipesService.Services;
 using recipesWEB.ViewModels.Recipes;
 
 namespace recipesWEB.Controllers
@@ -210,11 +211,12 @@ namespace recipesWEB.Controllers
         {
             var recipe = await rs.GetRecipeByIdAsync(id);
 
-            if (recipe != null)
+            if (recipe == null)
             {
-                await rs.DeleteRecipeAsync(id);
+                return NotFound();
             }
 
+            await rs.DeleteRecipeAsync(id);
             return RedirectToAction(nameof(Index));
         }
     }
