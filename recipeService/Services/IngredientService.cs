@@ -19,12 +19,34 @@ namespace recipesService.Services
             new_context = context;
         }
 
-        public async Task<List<Ingredient>> GetAllIngredientsAsync()
+        public async Task<List<Ingredient>> GetAllIngredientsAsync(string? searchString = null, string? sortOrder = null)
         {
-            return await new_context.Ingredients
-                .Include(i => i.RecipeIngredients)
-                .OrderBy(i => i.Name)
-                .ToListAsync();
+            var query = new_context.Ingredients
+                .Include(i => i.RecipeIngredients) // Зареждаме връзката, за да можем да броим рецептите
+                .AsQueryable();
+
+            // Филтриране по име
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                query = query.Where(i => i.Name.Contains(searchString));
+            }
+
+            // Сортиране по име (възходящо/низходящо) и по брой рецепти (низходящо)
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    query = query.OrderByDescending(i => i.Name);
+                    break;
+                case "recipes_desc":
+                    query = query.OrderByDescending(i => i.RecipeIngredients.Count);
+                    break;
+                case "name_asc":
+                default:
+                    query = query.OrderBy(i => i.Name);
+                    break;
+            }
+
+            return await query.ToListAsync();
         }
 
         public async Task<Ingredient?> GetIngredientByIdAsync(int id)

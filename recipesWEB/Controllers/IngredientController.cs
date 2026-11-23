@@ -4,6 +4,7 @@ using recipesDATA;
 using recipesWEB.ViewModels.Ingredients;
 using Microsoft.EntityFrameworkCore;
 using recipesService.Interfaces;
+using recipesService.Services;
 
 namespace recipesWEB.Controllers
 {
@@ -16,6 +17,20 @@ namespace recipesWEB.Controllers
             this.ins = ins;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetFilteredIngredients(string? search, string? sortOrder)
+        {
+            var ingredients = await ins.GetAllIngredientsAsync(search, sortOrder);
+
+            var res = ingredients.Select(x => new
+            {
+                id = x.Id,
+                name = x.Name,
+                recipesCount = x.RecipeIngredients != null ? x.RecipeIngredients.Count : 0
+            }).ToList();
+
+            return Json(res);
+        }
         public async Task<IActionResult> Index()
         {
             var ingredients = await ins.GetAllIngredientsAsync();

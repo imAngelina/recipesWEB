@@ -9,7 +9,7 @@ namespace recipesService.Interfaces
 {
     public interface IIngredientService
     {
-        Task<List<Ingredient>> GetAllIngredientsAsync();
+        Task<List<Ingredient>> GetAllIngredientsAsync(string? search = null, string? sortOrder = null);
         Task<Ingredient?> GetIngredientByIdAsync(int id);
         Task<Ingredient?> GetIngredientDetailsAsync(int id);
         Task AddIngredientAsync(Ingredient ingredient);
